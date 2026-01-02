@@ -3,12 +3,13 @@ Created on Thu Jan  1 10:26:46 2026
 
 @author: cl4pper
 """
+
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy.stats import gaussian_kde
 
-grades=np.array([2,2,4,4,4,4,4,4,4,4,4,5,5,5,6,6,9,9,10,10])
-answers=np.array([2,3,5,5,5,5,5,5,5,5,5,5,5,4,5,5,5,4,5,4])
+grades = np.array([2, 2, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 6, 6, 9, 9, 10, 10])
+answers = np.array([2, 3, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 4, 5, 5, 5, 4, 5, 4])
 
 sorted_grades = np.sort(grades)
 sorted_answers = np.sort(answers)
@@ -22,11 +23,13 @@ unique_grades = len(np.unique(sorted_grades))
 x_axis = np.append(np.arange(max_grade), max_grade)
 
 # creates an array from 0 to the max frequency among the array elements
-y_axis = np.append(np.arange(np.max(np.bincount(answers))), np.max(np.bincount(answers)))
+y_axis = np.append(
+    np.arange(np.max(np.bincount(answers))), np.max(np.bincount(answers))
+)
 
-plt.xlabel('Grades')
-plt.ylabel('Answers')
-plt.title('Relation Grades x Answers')
+plt.xlabel("Grades")
+plt.ylabel("Answers")
+plt.title("Relation Grades x Answers")
 plt.yticks(y_axis)
 
 plt.grid(True)
@@ -50,7 +53,13 @@ rel_grades_answers = np.vstack([sorted_grades, sorted_answers])
 gaussian_relation = gaussian_kde(rel_grades_answers)(rel_grades_answers)
 
 # c=colors, s=size
-plt.scatter(sorted_grades, sorted_answers, s=gaussian_relation * 1000, c=gaussian_relation, alpha=0.5)
+plt.scatter(
+    sorted_grades,
+    sorted_answers,
+    s=gaussian_relation * 1000,
+    c=gaussian_relation,
+    alpha=0.5,
+)
 
 """
 HISTOGRAM
