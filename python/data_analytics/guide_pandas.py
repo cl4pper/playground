@@ -1,5 +1,6 @@
 import os
 
+import numpy as np
 import pandas as pd
 
 """
@@ -38,3 +39,9 @@ print(brics.loc["BR"])  # Pandas DataFrame
 print("\nUsing iloc approach:")
 print(brics.iloc[[0, 3], [1, 3]])
 # print(brics.loc[:, [1, 3]]) is also possible
+
+print("\nLogic operators:")
+large_area = brics["area"] < 10
+small_area = brics["area"] > 5
+average_area = np.logical_and(small_area, large_area)  # others: logical_or, logical_not
+print(brics[average_area].loc[:, ["country"]])
