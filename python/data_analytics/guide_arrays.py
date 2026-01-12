@@ -23,3 +23,12 @@ medium_wages = np.logical_and(wages >= low_ref, wages <= high_ref)
 print(f"high wages: {wages[high_wages]}")
 print(f"low wages: {wages[low_wages]}")
 print(f"medium wages: {wages[medium_wages]}")
+
+
+dice = np.random.randint(1,7) # generates a random int from 1 to 6
+percentage = np.random.rand() # generates a random number between 0 to 1
+min_percentage = max(0.5, percentage) # returns the hight value between the two args
+# OR max(iterable) - returns the largest items in an iterable
+print(percentage)
+print(dice)
+print(f"min should be 0.5: {min_percentage}")
