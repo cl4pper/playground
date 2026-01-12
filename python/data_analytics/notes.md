@@ -42,3 +42,24 @@ for values in array:
 for index, value in enumerate(array):
   expression
 ```
+
+```
+# example with numpy
+a = np.array([1,2,3])
+b = np.array([4,5,6])
+c = np.array([a, b])
+
+for value in c:
+  print(value) # output: [1,2,3][4,5,6]
+
+for value in np.nditer(c):
+  print(value) # output: 1,2,3,4,5,6
+```
+
+```
+# example with dictionary
+# the order of interations is not fixed
+
+for key, value in dictionary.items():
+  expression
+```
