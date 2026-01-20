@@ -17,7 +17,6 @@ brics_table.index = ["BR", "RU", "IN", "CH", "SA"]  # set index of each row
 
 BASE_DIR = os.getcwd()
 csv_path = "/datasets/brics.csv"
-# path = "/Users/cl4pper/Desktop/Projects/playground/python/data_analytics/datasets/brics.csv"
 brics = pd.read_csv(BASE_DIR + csv_path, index_col=0)
 
 print("0. Here we see the whole data:")
