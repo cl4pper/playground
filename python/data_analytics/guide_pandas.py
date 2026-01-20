@@ -20,28 +20,38 @@ csv_path = "/datasets/brics.csv"
 # path = "/Users/cl4pper/Desktop/Projects/playground/python/data_analytics/datasets/brics.csv"
 brics = pd.read_csv(BASE_DIR + csv_path, index_col=0)
 
-print("Here we see the whole data:")
+print("0. Here we see the whole data:")
 print(brics)
 
-print("\nHere we limit the columns:")
+print("\n1.a. Here we limit the columns:")
 print(brics[["country", "capital"]])  # printing as Pandas DataFrame
 # print(brics["country", "capital"]) prints as Pandas Series
 
-print("\nHere we slice the data rows:")
+print("\n1.b. Here we slice the data rows:")
 print(brics[1:4])
 
-print("\nUsing loc approach:")
+print("\n2.a. Using loc approach:")
 print(brics.loc[["BR", "CH"], ["capital", "population"]])  # Pandas DataFrame
 print(brics.loc["BR"])  # Pandas DataFrame
 # print(brics.loc[:, ["capital", "population"]]) is also possible
 # print(brics.loc[:, "capital"]) prints as Pandas Series
 
-print("\nUsing iloc approach:")
+print("\n2.b. Using iloc approach:")
 print(brics.iloc[[0, 3], [1, 3]])
 # print(brics.loc[:, [1, 3]]) is also possible
 
-print("\nLogic operators:")
+print("\n3. Logic operators:")
 large_area = brics["area"] < 10
 small_area = brics["area"] > 5
 average_area = np.logical_and(small_area, large_area)  # others: logical_or, logical_not
 print(brics[average_area].loc[:, ["country"]])
+
+print("\n4.a. Loops:")
+for label, row in brics.iterrows():
+	print(label + ": " + row["country"])
+
+print("\n4.b. Adding a new column:")
+# for more efficincy, look for .apply() - pandas
+for label, row in brics.iterrows():
+	brics.loc[label, "pop_density"] = row["population"]/row["area"]
+print(brics)
