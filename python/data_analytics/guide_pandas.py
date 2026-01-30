@@ -23,8 +23,10 @@ print("0. Here we see the whole data:")
 print(brics)
 
 print("\n1.a. Here we limit the columns:")
-print(brics[["country", "capital"]])  # printing as Pandas DataFrame
-# print(brics["country", "capital"]) prints as Pandas Series
+print("As a DataFrame:\n")
+print(brics[["country", "capital"]]) # printing as Pandas DataFrame
+print("As a series:\n")
+# brics["country", "capital"] - prints as Pandas Series(to be fixed)
 
 print("\n1.b. Here we slice the data rows:")
 print(brics[1:4])
@@ -54,3 +56,6 @@ print("\n4.b. Adding a new column:")
 for label, row in brics.iterrows():
 	brics.loc[label, "pop_density"] = row["population"]/row["area"]
 print(brics)
+
+brics_pop = brics["population"]
+print(brics[brics_pop > 300])
