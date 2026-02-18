@@ -21,3 +21,7 @@ print(f"\nSubsetting columns:\n{brics[['area', 'population']]}")
 print(f"\nSubsetting rows - all rows:\n{brics[['area']] > 8}")
 print(f"\nSubsetting rows - by conditional:\n{brics[brics['area'] > 8]}")
 print(f"\nSubsetting by .isin():\n{brics[brics['country'].isin(['China', 'Russia'])]}")
+
+# Adding new columns
+brics["pop/area"] = round(brics["population"]/brics["area"], 2)
+print(f"\nAdding a new column pop/area:\n {brics}")
