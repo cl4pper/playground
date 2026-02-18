@@ -1,23 +1,12 @@
 # Guide
+OBS: data analysis action procedure - **filter**, **sort**, then **visualize**
 
-## Logic, Control and Filtering
+## Logic and Control
+Comparison: `>`, `<`, `>=`, `<=`, `==`, `!=`
 
-### Comparison operators
-| Operators  | Conditionals       |
-| ---------- | ------------------ |
-| >          | if `conditional`:  |
-| <          | elif `conditional`:|
-| >=         | else               |
-| >=         |
-| ==         |
-| !=         |
+Operators: `and`, `or`, `not`
 
-### Boolean operators
-| Operators   | Example          | Results     |
-| ----------- | ---------------- | ----------- |
-| and         | True and False   | False       |
-| or          | True or False    | True        |
-| not         | not False        | True        |
+Conditionals: `if` conditional, `elif` conditional, `else`
 
 ## Loops
 
