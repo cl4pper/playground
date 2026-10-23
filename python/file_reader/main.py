@@ -1,9 +1,10 @@
 import json
-import os
 
-BASE_DIR = os.getcwd()
+from utils.constants import DATA_DIR
+from utils.types import PayloadT
 
-with open(BASE_DIR + '/file_reader/data.json', 'r') as file:
-	data = json.load(file)
+with open(DATA_DIR, 'r') as file:
+	data: PayloadT = json.load(file)
 
-print(data)
+for post in data['posts']:
+	print(post['id'])
