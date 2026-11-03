@@ -1,0 +1,3 @@
+export const START_CHAT = 'START_CHAT'
+export const SEND_MESSAGE = 'SEND_MESSAGE'
+export const REPLY_MESSAGE = 'REPLY_MESSAGE'

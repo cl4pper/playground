@@ -1,0 +1,4 @@
+export const ACCEPT_FOLLOWER = 'ACCEPT_FOLLOWER'
+export const START_FOLLOWING = 'START_FOLLOWING'
+export const CREATE_POST = 'CREATE_POST'
+export const DELETE_POST = 'DELETE_POST'
