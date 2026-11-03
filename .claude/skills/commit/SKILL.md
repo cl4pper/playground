@@ -1,39 +1,61 @@
 ---
 name: commit
-description: Commit the currently staged git changes using this repo's conventional-commit style (type(scope): summary), showing a draft for approval first. Use when the user asks to commit, make a commit, or commit staged changes.
+description: Commit the staged changes using the project's commit message standard, showing a draft for approval first.
+disable-model-invocation: true
+argument-hint: '[optional hint for the commit message]'
+allowed-tools: Bash(git branch --show-current), Bash(date:*), Bash(git status:*), Bash(git diff:*), Bash(git log:*), Bash(git commit -F -:*)
 ---
 
-# Commit staged changes
+## Context
 
-1. Inspect what is staged:
-   - `git status --short`
-   - `git diff --cached`
-   If nothing is staged, stop and tell the user. Never run `git add` unless the user asks for it.
+- Branch: !`git branch --show-current`
+- Datetime: !`date '+%Y-%m-%dT%H:%M:%S%z'`
+- Session ID: ${CLAUDE_SESSION_ID}
+- Status: !`git status --short`
+- Staged diff: !`git diff --cached`
+- Recent commits: !`git log -5 --format=%s`
 
-2. Write the message in the repo's style:
-   - Format: `type(scope): summary`. Use lowercase and the imperative mood, with no trailing period.
-   - Types: `feat`, `fix`, `refactor`, `chore`, `docs`.
-   - Scope: the top-level project folder changed, e.g. `python`, `react-fetch` or `redux-demo`.
-   - Keep the subject line to 72 characters or fewer. Add a body only when the "why" isn't obvious from the diff.
-   - Examples from history:
-     - `feat(python): add json file reader`
-     - `feat(react-fetch): add ListContext type`
+User hint: $ARGUMENTS
 
-3. Show the user the draft message and the list of staged files, then wait for their approval. If they request changes, update the draft and show it again. Do not commit until they approve.
+## Task
 
-4. Commit only what is staged, passing the message through a HEREDOC and ending it with the attribution line:
-   ```
-   git commit -m "$(cat <<'MSG'
-   type(scope): summary
+Create a single commit from the **staged** changes only. Do not stage, unstage, or modify files.
+Unstaged and untracked changes must stay out of the commit, even if they look related.
+Run exactly `git commit -F -` with no other flags or paths: never `-a`/`--all`, `-i`/`--include`,
+`-o`/`--only`, `--amend`, or file paths, since each of these commits more than the index.
+Describe only what appears in the staged diff.
+If nothing is staged, stop and tell the user.
+If the branch is empty, stop and tell the user that HEAD is not on a branch (this includes
+a rebase in progress).
 
-   Co-Authored-By: Claude <noreply@anthropic.com>
-   MSG
-   )"
-   ```
+The message must follow this format exactly:
 
-5. Rules:
-   - Do not amend, rebase, or push unless asked.
-   - Confirm with the user before committing directly on `master`.
-   - If a pre-commit hook fails, fix the issue and make a new commit; don't use `--no-verify`.
+```
+<type>: <message>
 
-6. Afterwards, show the result with `git log -1 --stat`.
+<body>
+
+session_id: <session id>
+datetime: <datetime>
+```
+
+- `type`: a Conventional Commits type (`feat`, `fix`, `chore`, `docs`, `refactor`, `style`, `test`, `perf`, `build`, `ci`, `revert`).
+- `message`: short, lowercase, imperative summary, no trailing period (e.g. `feat: implement wireframe`).
+- `body`: optional. A `- ` bulleted list of the changes. Omit it for trivial commits, together with one of its surrounding blank lines, so a
+  single blank line separates the summary from `session_id:`.
+- `session_id`, `datetime`: copy the values from the Context section verbatim.
+- Add nothing else to the message: no blank lines other than the ones shown, no extra trailers.
+
+Before committing, show the user the full draft message and the list of staged files, then wait for their approval.
+If they request changes, update the draft and show it again. Do not commit until they approve.
+
+Pass the message through a heredoc so newlines are preserved:
+
+```sh
+git commit -F - <<'EOF'
+<full commit message>
+EOF
+```
+
+Do not use `--no-verify`. If a `pre-commit` hook fails, report the error instead of retrying around it.
+Finish by showing the output of `git log -1`.
