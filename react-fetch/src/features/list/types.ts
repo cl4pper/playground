@@ -11,3 +11,5 @@ export interface Comment {
 export interface FetchResponse extends ResponseT {
   data?: Comment[] | null;
 }
+
+export interface ListContext extends FetchResponse {}
