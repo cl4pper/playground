@@ -1,6 +1,6 @@
 ---
 name: commit
-description: Commit the currently staged git changes using this repo's conventional-commit style (type(scope): summary). Use when the user asks to commit, make a commit, or commit staged changes.
+description: Commit the currently staged git changes using this repo's conventional-commit style (type(scope): summary), showing a draft for approval first. Use when the user asks to commit, make a commit, or commit staged changes.
 ---
 
 # Commit staged changes
@@ -13,13 +13,15 @@ description: Commit the currently staged git changes using this repo's conventio
 2. Write the message in the repo's style:
    - Format: `type(scope): summary`. Use lowercase and the imperative mood, with no trailing period.
    - Types: `feat`, `fix`, `refactor`, `chore`, `docs`.
-   - Scope: the project folder, e.g. `python` for this folder, `react-fetch` or `redux-demo` for others.
+   - Scope: the top-level project folder changed, e.g. `python`, `react-fetch` or `redux-demo`.
    - Keep the subject line to 72 characters or fewer. Add a body only when the "why" isn't obvious from the diff.
    - Examples from history:
      - `feat(python): add json file reader`
-     - `feat(python): use typed data in file_reader and add readme`
+     - `feat(react-fetch): add ListContext type`
 
-3. Commit only what is staged, passing the message through a HEREDOC and ending it with the attribution line:
+3. Show the user the draft message and the list of staged files, then wait for their approval. If they request changes, update the draft and show it again. Do not commit until they approve.
+
+4. Commit only what is staged, passing the message through a HEREDOC and ending it with the attribution line:
    ```
    git commit -m "$(cat <<'MSG'
    type(scope): summary
@@ -29,9 +31,9 @@ description: Commit the currently staged git changes using this repo's conventio
    )"
    ```
 
-4. Rules:
+5. Rules:
    - Do not amend, rebase, or push unless asked.
    - Confirm with the user before committing directly on `master`.
    - If a pre-commit hook fails, fix the issue and make a new commit; don't use `--no-verify`.
 
-5. Afterwards, show the result with `git log -1 --stat`.
+6. Afterwards, show the result with `git log -1 --stat`.
